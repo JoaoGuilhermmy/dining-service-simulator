@@ -1,27 +1,26 @@
-# 🍽️ Sistema de Gerenciamento de Restaurante em C
+# 🍽️ Sistema de Gerenciamento de Restaurante
 
 <div align="center">
 
-![C](https://img.shields.io/badge/C-99-blue?style=for-the-badge&logo=c)
-![Cross-Platform](https://img.shields.io/badge/Platform-Cross--Platform-green?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Complete-success?style=for-the-badge)
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
+![Data Structures](https://img.shields.io/badge/Data_Structures-Queue%20%7C%20Linked%20List-orange?style=for-the-badge)
+![Platform](https://img.shields.io/badge/Platform-Cross--Platform-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
-**Sistema completo de gerenciamento de pedidos para restaurantes usando Estruturas de Dados**
+**Sistema completo de gerenciamento de pedidos para restaurantes usando Fila e Lista Encadeada**
 
-[📖 Sobre](#sobre-o-projeto) • [🚀 Instalação](#instalação) • [💡 Funcionalidades](#funcionalidades) • [🏗️ Arquitetura](#arquitetura)
+[🇺🇸 English Version](README.en.md) | [📖 Sobre](#-sobre-o-projeto) | [🚀 Instalação](#-instalação) | [💡 Funcionalidades](#-funcionalidades)
 
 ---
-
-**[🇺🇸 English Version](README.en.md)**
 
 </div>
 
----
-
 ## 📋 Sobre o Projeto
 
-O **IMD Palace Restaurant System** é um sistema de gerenciamento de pedidos desenvolvido em C que simula o fluxo completo de um restaurante. Utiliza **Filas (Queue)** para gerenciar a ordem de preparo na cozinha e **Listas Encadeadas** para montar o pedido de cada mesa antes do envio.
+O **IMD Palace Restaurant System** é um sistema de gerenciamento de pedidos desenvolvido em C que simula o fluxo completo de um restaurante. Utiliza:
+
+- **Filas (Queue)**: Para gerenciar a ordem de preparo na cozinha (FIFO)
+- **Listas Encadeadas**: Para montar o pedido de cada mesa antes do envio
 
 ### 🎯 Objetivos
 
@@ -42,71 +41,9 @@ O **IMD Palace Restaurant System** é um sistema de gerenciamento de pedidos des
 
 ---
 
-## ✨ Funcionalidades
-
-### 🍽️ Cardápio Disponível
-
-#### 🥗 Entradas
-1. Sopa de Cebola
-2. Salada Caesar
-3. Bruschetta
-4. Carpaccio de Carne
-5. Camarão ao Alho
-
-#### 🍝 Pratos Principais
-1. Lasanha à Bolonhesa
-2. Filé Mignon com Fritas
-3. Frango Grelhado com Legumes
-4. Bacalhau à Gomes de Sá
-5. Risoto de Cogumelos
-
-#### 🍰 Sobremesas
-1. Tiramisu
-2. Cheesecake de Frutas Vermelhas
-3. Mousse de Chocolate
-4. Pudim de Leite
-5. Sorvete de Baunilha com Calda de Morango
-
-### 📝 Gerenciamento de Pedidos
-
-#### Adicionar Itens ao Pedido
-- Navegação por categorias (Entrada/Principal/Sobremesa)
-- Seleção múltipla de itens por categoria
-- Confirmação de cada item adicionado
-- Pedido mantido em memória até finalização
-
-#### Remover Itens do Pedido
-- Visualização de todos os itens do pedido atual
-- Seleção por categoria e código
-- Remoção antes do envio para cozinha
-- Opção de cancelar a remoção
-
-#### Finalizar Pedido
-- Transferência automática para fila da cozinha
-- Atribuição de número de mesa
-- Liberação de memória da lista temporária
-- Incremento automático de mesa para próximo pedido
-
-### 👨‍🍳 Visualização da Cozinha
-
-```
-Pedidos na cozinha:
-Mesa 1 - Entrada: Sopa de Cebola
-Mesa 1 - Prato Principal: Lasanha à Bolonhesa
-Mesa 1 - Sobremesa: Tiramisu
-Mesa 2 - Entrada: Salada Caesar
-Mesa 2 - Prato Principal: Filé Mignon com Fritas
-```
-
-- Ordem FIFO respeitada
-- Identificação clara de mesa e tipo de prato
-- Atualização em tempo real
-
----
-
 ## 🏗️ Arquitetura
 
-### Estrutura do Projeto
+### Estrutura de Diretórios
 
 ```
 restaurante/
@@ -118,10 +55,17 @@ restaurante/
 └── makefile            # Script de compilação
 ```
 
-### Estruturas de Dados
+### 📊 Estruturas de Dados
 
 #### 1. **Lista Encadeada** (Pedido Temporário)
+
 ```c
+typedef enum {
+    ENTRADA,
+    PRINCIPAL,
+    SOBREMESA
+} TipoPrato;
+
 typedef struct no {
     TipoPrato tipo;      // ENTRADA, PRINCIPAL, SOBREMESA
     int valor;           // Código do prato (1-5)
@@ -129,9 +73,15 @@ typedef struct no {
 } No;
 ```
 
-**Uso:** Armazena temporariamente os itens do pedido de uma mesa antes do envio para cozinha.
+**Uso**: Armazena temporariamente os itens do pedido de uma mesa antes do envio para cozinha.
+
+**Vantagens**:
+- ✅ Tamanho dinâmico
+- ✅ Inserção O(1) no início
+- ✅ Facilita adição/remoção de itens
 
 #### 2. **Fila** (Cozinha)
+
 ```c
 typedef struct Pedido {
     int mesa;               // Número da mesa
@@ -146,9 +96,14 @@ typedef struct {
 } Fila;
 ```
 
-**Uso:** Mantém ordem de preparo dos pedidos (primeiro a entrar, primeiro a sair).
+**Uso**: Mantém ordem de preparo dos pedidos (primeiro a entrar, primeiro a sair).
 
-### Diagrama de Fluxo
+**Vantagens**:
+- ✅ FIFO garantido
+- ✅ Inserção O(1) no fim
+- ✅ Remoção O(1) no início
+
+### 🔄 Fluxo de Dados
 
 ```
 ┌─────────────────┐
@@ -181,25 +136,90 @@ typedef struct {
 └─────────────────┘
 ```
 
-### Gerenciamento de Memória
+---
 
-**Alocação Dinâmica:**
+## 💡 Funcionalidades
+
+### 🥗 Cardápio Disponível
+
+#### Entradas
+1. Sopa de Cebola
+2. Salada Caesar
+3. Bruschetta
+4. Carpaccio de Carne
+5. Camarão ao Alho
+
+#### 🍝 Pratos Principais
+1. Lasanha à Bolonhesa
+2. Filé Mignon com Fritas
+3. Frango Grelhado com Legumes
+4. Bacalhau à Gomes de Sá
+5. Risoto de Cogumelos
+
+#### 🍰 Sobremesas
+1. Tiramisu
+2. Cheesecake de Frutas Vermelhas
+3. Mousse de Chocolate
+4. Pudim de Leite
+5. Sorvete de Baunilha com Calda de Morango
+
+### 📝 Gerenciamento de Pedidos
+
+#### 1️⃣ Adicionar Itens ao Pedido
+
 ```c
-// Ao adicionar item ao pedido
-No *novo = malloc(sizeof(No));
-
-// Ao enviar para fila da cozinha
-Pedido *novo = malloc(sizeof(Pedido));
+inserir_pedido(&cabeca, ENTRADA, 2);  // Salada Caesar
+inserir_pedido(&cabeca, PRINCIPAL, 1); // Lasanha
 ```
 
-**Liberação:**
+**Processo**:
+- Navegação por categorias
+- Seleção múltipla de itens
+- Confirmação de cada item
+- Pedido mantido em memória até finalização
+
+#### 2️⃣ Remover Itens do Pedido
+
 ```c
-// Após enviar pedido, libera lista temporária
-while (cabeca != NULL) {
-    No *temp = cabeca;
-    cabeca = cabeca->proximo;
-    free(temp);
+remover_pedido(&cabeca, ENTRADA, 2);  // Remove Salada Caesar
+```
+
+**Processo**:
+- Visualização de todos os itens
+- Seleção por categoria e código
+- Remoção antes do envio para cozinha
+
+#### 3️⃣ Finalizar Pedido
+
+```c
+// Transfere pedido para fila da cozinha
+No *atual = cabeca;
+while (atual != NULL) {
+    inserir_fila(&cozinha, atual->tipo, atual->valor, mesa);
+    atual = atual->proximo;
 }
+```
+
+**Processo**:
+1. Transferência automática para fila da cozinha
+2. Atribuição de número de mesa
+3. Liberação de memória da lista temporária
+4. Incremento automático de mesa
+
+#### 4️⃣ Visualizar Cozinha
+
+```c
+imprime_fila(&cozinha);
+```
+
+**Saída**:
+```
+Pedidos na cozinha:
+Mesa 1 - Entrada: Sopa de Cebola
+Mesa 1 - Prato Principal: Lasanha à Bolonhesa
+Mesa 1 - Sobremesa: Tiramisu
+Mesa 2 - Entrada: Salada Caesar
+Mesa 2 - Prato Principal: Filé Mignon com Fritas
 ```
 
 ---
@@ -208,9 +228,9 @@ while (cabeca != NULL) {
 
 ### Pré-requisitos
 
-- 🔧 **Compilador C:** GCC, Clang, ou MSVC
-- 📦 **Make** (opcional, mas recomendado)
-- 💻 **Sistema Operacional:** Windows, Linux ou macOS
+- **Compilador C**: GCC, Clang ou MSVC
+- **Make** (opcional)
+- **Sistema Operacional**: Windows, Linux ou macOS
 
 ### Compilação
 
@@ -233,89 +253,60 @@ restaurante.exe        # Windows
 
 ```bash
 # Linux/macOS
-gcc -std=c99 -o restaurante main.c lista.c fila.c
+gcc -std=c99 -Wall -Wextra -o restaurante main.c lista.c fila.c
 
 # Windows com MinGW
-gcc -std=c99 -o restaurante.exe main.c lista.c fila.c
+gcc -std=c99 -Wall -Wextra -o restaurante.exe main.c lista.c fila.c
 ```
 
 ---
 
 ## 💻 Como Usar
 
-### Fluxo Básico
+### Exemplo Completo de Uso
 
 ```
-1. Inicie o programa
-   ↓
-2. Selecione "1 - Fazer pedido"
-   ↓
-3. Escolha itens das categorias (Entradas, Principal, Sobremesas)
-   ↓
-4. Revise e remova itens se necessário (opção 4)
-   ↓
-5. Finalize o pedido (opção 0)
-   ↓
-6. Visualize a fila da cozinha (opção 2)
-   ↓
-7. Saia do programa (opção 3)
-```
+        Bem Vindo ao restaurante IMD palace
 
-### Exemplo de Uso Completo
-
-```
-Bem Vindo ao restaurante IMD palace
-
-1 - Fazer pedido
-2 - Visualizar pedidos na cozinha
-3 - Sair
+        1 - Fazer pedido
+        2 - Visualizar pedidos na cozinha
+        3 - Sair
 
 Escolha: 1
 
---- MONTAGEM DO PEDIDO ---
-
-1 - Escolher Entradas
-2 - Escolher Prato Principal
-3 - Escolher Sobremesas
-4 - Remover Prato
-0 - Finalizar pedido
+        1 - Escolher Entradas
+        2 - Escolher Prato Principal
+        3 - Escolher Sobremesas
+        4 - Remover Prato
+        0 - Finalizar pedido
 
 Escolha: 1
 
-Entradas:
-1. Sopa de Cebola
-2. Salada Caesar
-3. Bruschetta
-4. Carpaccio de Carne
-5. Camarão ao Alho
+        Entradas:
+        1. Sopa de Cebola
+        2. Salada Caesar
+        3. Bruschetta
+        4. Carpaccio de Carne
+        5. Camarao ao Alho
 
-Digite o número (0 para sair): 2
-
+Digite o número: 2
 Salada Caesar adicionada ao pedido
-
 Deseja pedir outra entrada? (Sim = 1, Não = 0): 0
-
---- MONTAGEM DO PEDIDO ---
 
 Escolha: 2
 
-Pratos Principais:
-1. Lasanha à Bolonhesa
-2. Filé Mignon com Fritas
-3. Frango Grelhado com Legumes
-4. Bacalhau à Gomes de Sá
-5. Risoto de Cogumelos
+        Pratos Principais:
+        1. Lasanha à Bolonhesa
+        2. Filé Mignon com Fritas
+        3. Frango Grelhado com Legumes
+        4. Bacalhau à Gomes de Sá
+        5. Risoto de Cogumelos
 
 Digite o número: 1
-
 Lasanha à Bolonhesa adicionada ao pedido
-
 Deseja pedir outro prato principal? (Sim = 1, Não = 0): 0
 
---- MONTAGEM DO PEDIDO ---
-
 Escolha: 0
-
 Pedido enviado para a cozinha com sucesso!
 
 --- MENU PRINCIPAL ---
@@ -331,24 +322,6 @@ Mesa 1 - Prato Principal: Lasanha à Bolonhesa
 
 ## 🔧 Detalhes Técnicos
 
-### Compatibilidade Multiplataforma
-
-```c
-// lista.c - Limpeza de tela
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
-#endif
-
-// Delay de tela
-#ifdef _WIN32
-    Sleep(segundos * 1000);
-#else
-    sleep(segundos);
-#endif
-```
-
 ### Arrays Globais de Pratos
 
 ```c
@@ -360,21 +333,108 @@ const char *entradas[] = {
     "Carpaccio de Carne",
     "Camarao ao Alho"
 };
+
+const char *principais[] = {
+    "Lasanha à Bolonhesa",
+    "File Mignon com Fritas",
+    "Frango Grelhado com Legumes",
+    "Bacalhau a Gomes de Sa",
+    "Risoto de Cogumelos"
+};
+
+const char *sobremesas[] = {
+    "Tiramisu",
+    "Cheesecake de Frutas Vermelhas",
+    "Mousse de Chocolate",
+    "Pudim de Leite",
+    "Sorvete de Baunilha com Calda de Morango"
+};
 ```
 
-**Vantagem:** Centralização dos nomes, fácil manutenção e tradução.
+**Vantagem**: Centralização dos nomes, fácil manutenção e tradução.
 
-### Enum para Tipos
+### Compatibilidade Multiplataforma
 
 ```c
-typedef enum {
-    ENTRADA,
-    PRINCIPAL,
-    SOBREMESA
-} TipoPrato;
+// lista.c - Limpeza de tela
+void limpa_tela() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+
+// Pausa
+void espera(int segundos) {
+#ifdef _WIN32
+    Sleep(segundos * 1000);
+#else
+    sleep(segundos);
+#endif
+}
 ```
 
-**Benefício:** Type-safety e legibilidade do código.
+### Alocação Dinâmica
+
+```c
+// Inserir na lista
+void inserir_pedido(No **cabeca, TipoPrato tipo, int valor) {
+    No *novo = malloc(sizeof(No));
+    if (novo == NULL) {
+        printf("Erro ao alocar memória.\n");
+        return;
+    }
+    novo->tipo = tipo;
+    novo->valor = valor;
+    novo->proximo = *cabeca;
+    *cabeca = novo;
+}
+
+// Inserir na fila
+void inserir_fila(Fila *fila, TipoPrato tipo, int valor, int mesa) {
+    Pedido *novo = malloc(sizeof(Pedido));
+    if (novo == NULL) {
+        printf("Erro ao alocar memória!\n");
+        return;
+    }
+    novo->mesa = mesa;
+    novo->tipo = tipo;
+    novo->valor = valor;
+    novo->proximo = NULL;
+    
+    if (fila->fim == NULL) {
+        fila->inicio = fila->fim = novo;
+    } else {
+        fila->fim->proximo = novo;
+        fila->fim = novo;
+    }
+}
+```
+
+### Gerenciamento de Memória
+
+```c
+// Liberar lista após finalizar pedido
+while (cabeca != NULL) {
+    No *temp = cabeca;
+    cabeca = cabeca->proximo;
+    free(temp);
+}
+```
+
+---
+
+## 📊 Complexidade Computacional
+
+| Operação | Complexidade | Estrutura | Justificativa |
+|----------|--------------|-----------|---------------|
+| Adicionar item ao pedido | O(1) | Lista Encadeada | Inserção no início |
+| Remover item do pedido | O(n) | Lista Encadeada | Busca + remoção |
+| Enviar pedido para cozinha | O(n) | Lista → Fila | Percorre lista |
+| Inserir na fila | O(1) | Fila | Inserção no fim |
+| Remover da fila | O(1) | Fila | Remoção no início |
+| Visualizar fila | O(n) | Fila | Percorre todos |
 
 ---
 
@@ -382,122 +442,79 @@ typedef enum {
 
 ### Fila (Queue) - FIFO
 
-**Características:**
-- ✅ Primeiro a Entrar, Primeiro a Sair
-- ✅ Inserção no fim (`inserir_fila`)
-- ✅ Remoção no início (`remover_fila`)
-- ✅ Complexidade O(1) para ambas operações
+**Características**:
+- Primeiro a Entrar, Primeiro a Sair
+- Inserção no fim (`inserir_fila`)
+- Remoção no início (`remover_fila`)
+- Complexidade O(1) para ambas operações
 
-**Aplicação no Projeto:**
+**Aplicação no Projeto**:
 - Ordem justa de preparo dos pedidos
 - Cozinha processa na ordem de chegada
 
 ### Lista Encadeada (Linked List)
 
-**Características:**
-- ✅ Tamanho dinâmico
-- ✅ Inserção eficiente no início (O(1))
-- ✅ Remoção de elemento específico (O(n))
-- ✅ Uso eficiente de memória
+**Características**:
+- Tamanho dinâmico
+- Inserção eficiente no início (O(1))
+- Remoção de elemento específico (O(n))
+- Uso eficiente de memória
 
-**Aplicação no Projeto:**
+**Aplicação no Projeto**:
 - Construção dinâmica do pedido
 - Permite adicionar/remover itens antes de finalizar
 
 ---
 
-## 📊 Complexidade Computacional
-
-| Operação | Complexidade | Estrutura |
-|----------|--------------|-----------|
-| Adicionar item ao pedido | O(1) | Lista Encadeada |
-| Remover item do pedido | O(n) | Lista Encadeada |
-| Enviar pedido para cozinha | O(n) | Lista → Fila |
-| Inserir na fila | O(1) | Fila |
-| Remover da fila | O(1) | Fila |
-| Visualizar fila | O(n) | Fila |
-
----
-
-## 🚀 Melhorias Futuras
-
-### Curto Prazo
-- [ ] Adicionar preços aos pratos
-- [ ] Calcular total do pedido
-- [ ] Implementar sistema de comanda
-- [ ] Adicionar data/hora aos pedidos
-- [ ] Salvar histórico em arquivo
-
-### Médio Prazo
-- [ ] Interface gráfica com ncurses (Linux) ou conio (Windows)
-- [ ] Sistema de múltiplos garçons
-- [ ] Controle de estoque de ingredientes
-- [ ] Tempo estimado de preparo
-- [ ] Sistema de prioridade (VIP)
-
-### Longo Prazo
-- [ ] Aplicativo mobile para garçons (React Native)
-- [ ] Dashboard em tempo real (web)
-- [ ] Integração com impressora de pedidos
-- [ ] Analytics de pratos mais vendidos
-- [ ] Sistema de reservas de mesas
-
----
-
-## 🐛 Troubleshooting
-
-### Problema: Caracteres especiais não aparecem corretamente
-
-**Solução Windows:**
-```bash
-# Execute o terminal com codificação UTF-8
-chcp 65001
-```
-
-**Solução Linux/macOS:**
-```bash
-# Verifique locale
-locale
-
-# Se necessário, exporte UTF-8
-export LANG=pt_BR.UTF-8
-```
+## 🐛 Solução de Problemas
 
 ### Problema: Erro de compilação "undefined reference"
 
-**Causa:** Arquivos não foram linkados corretamente.
-
-**Solução:**
+**Solução**:
 ```bash
-# Certifique-se de compilar TODOS os .c juntos
 gcc -o restaurante main.c lista.c fila.c
+```
+
+### Problema: Caracteres especiais não aparecem
+
+**Windows**:
+```bash
+chcp 65001
+```
+
+**Linux/macOS**:
+```bash
+export LANG=pt_BR.UTF-8
 ```
 
 ### Problema: Vazamento de memória
 
-**Verificação com Valgrind (Linux):**
+**Verificação com Valgrind (Linux)**:
 ```bash
 valgrind --leak-check=full ./restaurante
 ```
 
 ---
 
-## 🤝 Contribuindo
+## 📈 Possíveis Melhorias
 
-Contribuições são muito bem-vindas!
+### Curto Prazo
+- [ ] Adicionar preços aos pratos
+- [ ] Calcular total do pedido
+- [ ] Implementar sistema de comanda
+- [ ] Adicionar validação de entrada
 
-1. Fork o projeto
-2. Crie uma branch (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona MinhaFeature'`)
-4. Push para a branch (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
+### Médio Prazo
+- [ ] Interface gráfica com ncurses
+- [ ] Sistema de múltiplos garçons
+- [ ] Controle de estoque de ingredientes
+- [ ] Tempo estimado de preparo
 
-### Ideias para Contribuição
-- 🎨 Adicionar cores ao menu (ANSI codes)
-- 💾 Implementar persistência de dados
-- 🧪 Criar testes unitários
-- 📖 Traduzir para outros idiomas
-- 🔒 Adicionar autenticação de garçons
+### Longo Prazo
+- [ ] Aplicativo mobile para garçons
+- [ ] Dashboard em tempo real
+- [ ] Integração com impressora
+- [ ] Analytics de pratos mais vendidos
 
 ---
 
@@ -521,7 +538,7 @@ Este projeto está sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) par
 
 - Comunidade C pela documentação excelente
 - Professores e colegas que contribuíram com feedback
-- Stack Overflow pelas soluções de problemas comuns
+- Stack Overflow pelas soluções de problemas
 
 ---
 
@@ -531,6 +548,6 @@ Este projeto está sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) par
 
 **Desenvolvido com ❤️ e muito ☕**
 
-### 💡 Projeto educacional para demonstrar Estruturas de Dados em C
+### 💡 Projeto educacional demonstrando Fila e Lista Encadeada em C
 
 </div>
